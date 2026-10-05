@@ -1,0 +1,369 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>دواجارد - دورة حياة العميل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;600;700&display=swap">
+<style>
+/* Layout: RTL long-form document, sticky section nav, each lifecycle shown as numbered stages (order matters there) with who-does-what rows. */
+:root {
+  --bg: #f6f7f5;
+  --surface: #ffffff;
+  --fg: #16231f;
+  --muted: #5b6b66;
+  --line: #dce3df;
+  --accent: #0b6b57;
+  --accent-soft: #e0f0ea;
+  --warn: #9a5b00;
+  --warn-soft: #fbefd9;
+  --info: #24507a;
+  --info-soft: #e3edf7;
+  --font-display: "Readex Pro", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101a17; --surface: #16231f; --fg: #e7efeb; --muted: #9fb0aa; --line: #27382f;
+    --accent: #4fc3a4; --accent-soft: #163329; --warn: #f0b45a; --warn-soft: #33270f;
+    --info: #8fbbe8; --info-soft: #182a3e; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101a17; --surface: #16231f; --fg: #e7efeb; --muted: #9fb0aa; --line: #27382f;
+  --accent: #4fc3a4; --accent-soft: #163329; --warn: #f0b45a; --warn-soft: #33270f;
+  --info: #8fbbe8; --info-soft: #182a3e; color-scheme: dark;
+}
+html { direction: rtl; scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.85; padding-inline: 16px; padding-block: 0 64px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+.wrap { max-width: 920px; margin-inline: auto; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.4; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: var(--accent); }
+
+header.top { padding-block: 40px 24px; display: flex; flex-direction: column; gap: 12px; border-bottom: 1px solid var(--line); }
+.eyebrow { font-size: 13px; letter-spacing: .04em; color: var(--accent); font-weight: 600; }
+h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 700; }
+.lead { color: var(--muted); max-width: 65ch; font-size: 17px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--muted); }
+
+nav.toc { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); margin-inline: -16px; padding-inline: 16px; }
+nav.toc ul { list-style: none; margin: 0; padding: 10px 0; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: thin; }
+nav.toc a { white-space: nowrap; text-decoration: none; font-size: 14px; color: var(--muted); padding: 4px 12px; border-radius: 6px; display: block; }
+nav.toc a:hover, nav.toc a:focus-visible { color: var(--fg); background: var(--accent-soft); outline: none; }
+
+section { padding-block: 44px 8px; scroll-margin-top: 64px; }
+h2 { font-size: clamp(22px, 3.6vw, 28px); font-weight: 600; margin-bottom: 12px; }
+h3 { font-size: 18px; font-weight: 600; margin-block: 28px 8px; }
+.sec-intro { color: var(--muted); max-width: 70ch; margin-bottom: 20px; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; min-width: 0; }
+.card h3 { margin-block: 0 6px; font-size: 17px; }
+.card p, .card li { font-size: 15px; color: var(--muted); }
+.card ul { margin: 6px 0 0; padding-inline-start: 20px; }
+.tag { display: inline-block; font-size: 12px; padding: 0 8px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); font-weight: 600; margin-bottom: 8px; }
+
+/* Lifecycle stages */
+.stages { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+.stage { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 16px 16px 18px; }
+.stage .n { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: var(--bg); font-family: var(--font-display); font-weight: 600; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+.stage h3 { margin: 0 0 8px; font-size: 18px; }
+.rows { display: grid; gap: 6px; margin: 0; }
+.rows div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 10px; font-size: 15px; }
+.rows dt { color: var(--accent); font-weight: 600; font-size: 14px; }
+.rows dd { margin: 0; color: var(--fg); }
+.rows .sys dt { color: var(--info); }
+.rows .out dt { color: var(--warn); }
+@media (max-width: 520px) {
+  .stage { grid-template-columns: 1fr; }
+  .rows div { grid-template-columns: 1fr; gap: 0; }
+}
+
+.note { border-radius: 10px; padding: 14px 18px; font-size: 15px; margin-block: 18px; }
+.note.warn { background: var(--warn-soft); color: var(--fg); border: 1px solid var(--warn); }
+.note.info { background: var(--info-soft); border: 1px solid var(--info); }
+.note b { font-weight: 600; }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 15px; }
+th, td { text-align: start; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--accent-soft); }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { font-variant-numeric: tabular-nums; }
+.pill { display: inline-block; font-size: 13px; padding: 0 10px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); font-weight: 600; white-space: nowrap; }
+.pill.w { background: var(--warn-soft); color: var(--warn); }
+.pill.i { background: var(--info-soft); color: var(--info); }
+
+.ledger { direction: ltr; font-variant-numeric: tabular-nums; }
+.ledger td:first-child, .ledger th:first-child { text-align: right; direction: rtl; }
+.ledger td:last-child, .ledger th:last-child { text-align: left; }
+
+ul.plain { margin: 0; padding-inline-start: 22px; display: grid; gap: 6px; }
+footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">وثيقة تشغيلية شاملة</div>
+  <h1>منصة دواجارد: دورة حياة العميل في كل مرحلة</h1>
+  <p class="lead">سوق إلكتروني مغلق بين الصيدليات لتبادل النواقص والأدوية الراكدة. تشرح هذه الوثيقة ما يحدث في كل جزء من المنصة، وماذا يفعل العميل وماذا يفعل النظام في كل خطوة، من التسجيل حتى سحب الأرباح.</p>
+  <div class="meta"><span>الأطراف: صيدلية (مشتري وبائع بحساب واحد)، إدارة المنصة، شركة الشحن</span><span>الربط: بوابة دفع محلية، رصد، ZATCA</span></div>
+</header>
+
+<nav class="toc" aria-label="أقسام الوثيقة">
+  <ul>
+    <li><a href="#overview">نظرة عامة</a></li>
+    <li><a href="#onboarding">التسجيل والتفعيل</a></li>
+    <li><a href="#seller">رحلة البائع</a></li>
+    <li><a href="#buyer">رحلة المشتري</a></li>
+    <li><a href="#order">حالات الطلب</a></li>
+    <li><a href="#wallet">المحفظة</a></li>
+    <li><a href="#privacy">حماية العمولة</a></li>
+    <li><a href="#dispute">النزاعات</a></li>
+    <li><a href="#gov">الربط الحكومي</a></li>
+    <li><a href="#admin">لوحة الإدارة</a></li>
+  </ul>
+</nav>
+
+<section id="overview">
+  <h2>1. نظرة عامة</h2>
+  <p class="sec-intro">الفكرة: صيدلية عندها أدوية راكدة قريبة الصلاحية تعرضها بخصم، وصيدلية ثانية تبحث عن نواقص تشتريها. المنصة هي الوسيط الوحيد: تحفظ الهويات، تستلم الأموال، تدير الشحن، وتربط العملية بالجهات الحكومية.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">صيدلية</span><h3>مشتري وبائع بحساب واحد</h3><p>تبدّل الصيدلية بين وضع الشراء ووضع البيع من نفس اللوحة بدون تسجيل خروج.</p></div>
+    <div class="card"><span class="tag">إدارة</span><h3>الحَكَم والمُشغِّل</h3><p>تراجع التراخيص، تراقب الأموال، تحسم النزاعات، وتحوّل مستحقات البائعين.</p></div>
+    <div class="card"><span class="tag">خارجي</span><h3>بوابة الدفع</h3><p>بوابة محلية قياسية مثل ميسر أو بيتابس. كل المدفوعات تدخل حساب المنصة البنكي الموحد.</p></div>
+    <div class="card"><span class="tag">خارجي</span><h3>شركة الشحن</h3><p>أرامكس أو سمسا عبر API. تُولَّد البوليصة تلقائياً دون بيانات الصيدلية المشترية.</p></div>
+    <div class="card"><span class="tag">حكومي</span><h3>رصد</h3><p>يتلقى بيانات تتبع الدواء من الخلفية بعد اكتمال الصفقة فقط.</p></div>
+    <div class="card"><span class="tag">حكومي</span><h3>ZATCA</h3><p>الفوترة الإلكترونية المتوافقة مع هيئة الزكاة والضريبة والجمارك.</p></div>
+  </div>
+</section>
+
+<section id="onboarding">
+  <h2>2. دورة حياة الحساب: من التسجيل إلى التفعيل</h2>
+  <p class="sec-intro">لا يرى أي صيدلي المنصة قبل أن تتحقق الإدارة من ترخيصه. هذا يحمي السوق من الأدوية غير النظامية.</p>
+  <div class="stages">
+    <div class="stage"><div class="n">1</div><div>
+      <h3>إنشاء الحساب وإرسال المستندات</h3>
+      <dl class="rows">
+        <div><dt>العميل</dt><dd>يسجل ببريد وجوال، ويرفع السجل التجاري وترخيص هيئة الغذاء والدواء ورقم GLN، ويضيف بيانات الحساب البنكي لاستلام الأرباح.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>يتحقق من اكتمال الحقول وصيغة الأرقام، ويضع الحساب في حالة "قيد المراجعة". لا يمكن البحث أو الشراء أو البيع في هذه الحالة.</dd></div>
+        <div class="out"><dt>المخرجات</dt><dd>رسالة تأكيد استلام الطلب، وتذكرة مراجعة تظهر في لوحة الإدارة.</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">2</div><div>
+      <h3>مراجعة الإدارة</h3>
+      <dl class="rows">
+        <div><dt>الإدارة</dt><dd>تطابق المستندات مع الجهات الرسمية، وتتأكد أن GLN يخص الصيدلية نفسها، ثم تعتمد أو ترفض مع ذكر السبب.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>يسجل من راجع ومتى وما القرار، ويغيّر حالة الحساب.</dd></div>
+        <div class="out"><dt>المخرجات</dt><dd>إشعار بالقبول أو الرفض. عند الرفض يستطيع العميل تصحيح المستند وإعادة الإرسال.</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">3</div><div>
+      <h3>التفعيل والاستخدام</h3>
+      <dl class="rows">
+        <div><dt>العميل</dt><dd>تفتح له لوحة الصيدلية الموحدة بأقسامها الثلاثة: الشراء، والبيع، والمحفظة.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>ينشئ محفظة بأرصدة صفرية (معلق ومتاح وإجمالي أرباح)، ويربط الحساب برمز داخلي بدل الاسم الظاهر.</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">4</div><div>
+      <h3>الإيقاف أو انتهاء الترخيص</h3>
+      <dl class="rows">
+        <div><dt>الإدارة</dt><dd>توقف الحساب عند انتهاء الترخيص أو مخالفة السياسات.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>يخفي منتجات البائع من البحث، ويمنع الطلبات الجديدة، ويُبقي الطلبات الجارية والرصيد المستحق قائمين حتى تُسوّى.</dd></div>
+      </dl></div></div>
+  </div>
+</section>
+
+<section id="seller">
+  <h2>3. رحلة البائع (Seller Mode)</h2>
+  <p class="sec-intro">من رفع قائمة الرواكد حتى وصول المال إلى الحساب البنكي.</p>
+  <div class="stages">
+    <div class="stage"><div class="n">1</div><div>
+      <h3>رفع المنتجات</h3>
+      <dl class="rows">
+        <div><dt>العميل</dt><dd>يرفع ملف Excel أو CSV يحوي قائمة الرواكد دفعة واحدة، ويحدد نسبة الخصم. يستطيع أيضاً إضافة منتج منفرداً.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>يقرأ الملف، يعرض معاينة بالأخطاء (تاريخ صلاحية ناقص، سعر غير رقمي)، ثم ينشر الأصناف السليمة.</dd></div>
+        <div class="out"><dt>المخرجات</dt><dd>تقرير رفع: عدد الأصناف المقبولة والمرفوضة وسبب كل رفض.</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">2</div><div>
+      <h3>إدارة المخزون المعروض</h3>
+      <dl class="rows">
+        <div><dt>العميل</dt><dd>يعدّل الكميات والأسعار وتواريخ الصلاحية، ويسحب أي صنف من العرض.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>يحجز الكمية عند إتمام الدفع، وينقص المتاح تلقائياً، ويخفي الصنف عند انتهاء الكمية.</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">3</div><div>
+      <h3>استلام طلب جديد</h3>
+      <dl class="rows">
+        <div><dt>العميل</dt><dd>يصله إشعار بطلب مدفوع. يرى في "مبيعاتي" رمز الطلب والأصناف والكميات ومدينة الوجهة فقط، بدون اسم المشتري.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>ينشئ رصيداً معلقاً في محفظة البائع بقيمة الطلب. المبلغ ظاهر لكنه غير قابل للسحب.</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">4</div><div>
+      <h3>التجهيز وطباعة البوليصة العمياء</h3>
+      <dl class="rows">
+        <div><dt>العميل</dt><dd>يجهز الشحنة ويطبع البوليصة ويلصقها على الطرد.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>يولّد البوليصة عبر API الشحن. المطبوع يحوي الباركود واسم مدينة الوجهة والوزن فقط.</dd></div>
+        <div class="out"><dt>المخرجات</dt><dd>ملف البوليصة، وطلب استلام من شركة الشحن.</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">5</div><div>
+      <h3>انتظار تأكيد المشتري</h3>
+      <dl class="rows">
+        <div><dt>العميل</dt><dd>يتابع حالة الطلب. لا يملك أي إجراء إلا الرد إذا فُتح نزاع.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>عند ضغط المشتري "تأكيد الاستلام والمطابقة" يخصم العمولة وضريبتها، وينقل الصافي من المعلق إلى المتاح.</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">6</div><div>
+      <h3>طلب السحب</h3>
+      <dl class="rows">
+        <div><dt>العميل</dt><dd>يضغط "طلب سحب الرصيد" ويحدد المبلغ من الرصيد المتاح.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>يخصم المبلغ من المتاح فوراً ويجعله "قيد التحويل" حتى لا يُسحب مرتين.</dd></div>
+        <div class="out"><dt>المخرجات</dt><dd>تحويل بنكي من الإدارة (يدوي أو آلي)، وإشعار بإتمام التحويل وسجل في كشف الحساب.</dd></div>
+      </dl></div></div>
+  </div>
+</section>
+
+<section id="buyer">
+  <h2>4. رحلة المشتري (Buyer Mode)</h2>
+  <p class="sec-intro">من البحث عن الناقص حتى تأكيد الاستلام والحصول على الفاتورة.</p>
+  <div class="stages">
+    <div class="stage"><div class="n">1</div><div>
+      <h3>البحث</h3>
+      <dl class="rows">
+        <div><dt>العميل</dt><dd>يبحث بالاسم التجاري أو المادة الفعالة، ويرشّح بالسعر وتاريخ الصلاحية ونسبة الخصم والمدينة.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>يعرض النتائج بدون أي هوية للبائع. يظهر رمز العرض والسعر والكمية والصلاحية فقط.</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">2</div><div>
+      <h3>السلة المجمعة</h3>
+      <dl class="rows">
+        <div><dt>العميل</dt><dd>يضيف أصنافاً من عدة بائعين في سلة واحدة ويراجع الإجمالي.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>يقسّم السلة داخلياً إلى طلب فرعي لكل بائع، لأن لكل بائع شحنة وبوليصة ورصيداً معلقاً مستقلاً. المشتري يدفع مرة واحدة.</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">3</div><div>
+      <h3>الدفع</h3>
+      <dl class="rows">
+        <div><dt>العميل</dt><dd>يدفع عبر بوابة الدفع المحلية.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>عند نجاح الدفع تدخل الأموال حساب المنصة، ويُنشأ لكل بائع رصيد معلق، وتُحجز الكميات، ويُنشأ رمز طلب موحد (Order ID).</dd></div>
+        <div class="out"><dt>المخرجات</dt><dd>إيصال دفع وإشعار للبائعين.</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">4</div><div>
+      <h3>تتبع الشحنات في "مشترياتي"</h3>
+      <dl class="rows">
+        <div><dt>العميل</dt><dd>يتابع حالة كل شحنة قادمة.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>يسحب حالة الشحن من API الشركة ويحدّث الطلب تلقائياً حتى "تم التسليم".</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">5</div><div>
+      <h3>الاستلام والمطابقة</h3>
+      <dl class="rows">
+        <div><dt>العميل</dt><dd>يفتح الطرد ويطابق الأصناف والكميات والصلاحية والتشغيلة مع الطلب. إما يضغط "تأكيد الاستلام والمطابقة" أو يفتح شكوى.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>عند التأكيد: يخصم العمولة، يحرر الرصيد للبائع، يرسل بيانات التتبع إلى رصد، ويصدر الفاتورة.</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">6</div><div>
+      <h3>الفاتورة</h3>
+      <dl class="rows">
+        <div><dt>العميل</dt><dd>يستعرض فواتير الشراء الإلكترونية المتوافقة مع ZATCA ويحمّلها.</dd></div>
+        <div class="out"><dt>المخرجات</dt><dd>فاتورة مرتبطة برمز الطلب، وتظهر في سجل المشتريات.</dd></div>
+      </dl></div></div>
+  </div>
+</section>
+
+<section id="order">
+  <h2>5. دورة حياة الطلب الواحد</h2>
+  <p class="sec-intro">كل طلب يمر بهذه الحالات. الحالات التي تحرّك المال هي الدفع والتأكيد والنزاع، وهي المذكورة في آلية المنصة. الحالات الوسيطة (التجهيز والشحن والتسليم) أضفناها لاستكمال الدورة.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>الحالة</th><th>ما الذي حدث</th><th>أثر على المال</th><th>من يحرّكها</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill i">بانتظار الدفع</span></td><td>المشتري بدأ الدفع</td><td>لا شيء. الكميات محجوزة لمدة قصيرة</td><td>المشتري</td></tr>
+      <tr><td><span class="pill">مدفوع</span></td><td>نجح الدفع</td><td>المال في حساب المنصة، رصيد معلق للبائع</td><td>البوابة</td></tr>
+      <tr><td><span class="pill">قيد التجهيز</span></td><td>البائع يجهز الطلب</td><td>بلا تغيير</td><td>البائع</td></tr>
+      <tr><td><span class="pill">تم الشحن</span></td><td>الشركة استلمت الطرد</td><td>بلا تغيير</td><td>شركة الشحن</td></tr>
+      <tr><td><span class="pill">تم التسليم</span></td><td>وصل الطرد للمشتري</td><td>بلا تغيير. تبدأ فترة المطابقة</td><td>شركة الشحن</td></tr>
+      <tr><td><span class="pill">مكتمل</span></td><td>المشتري ضغط التأكيد</td><td>خصم العمولة، الصافي إلى الرصيد المتاح</td><td>المشتري</td></tr>
+      <tr><td><span class="pill w">نزاع</span></td><td>المشتري أبلغ عن تلف أو مخالفة</td><td>تجميد المبلغ</td><td>المشتري ثم الإدارة</td></tr>
+      <tr><td><span class="pill w">مسترد / ملغي</span></td><td>قرار الإدارة لصالح المشتري، أو فشل الدفع</td><td>إعادة المبلغ للمشتري</td><td>الإدارة</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="wallet">
+  <h2>6. المحفظة والدورة المالية</h2>
+  <p class="sec-intro">الأموال كلها في حساب بنكي واحد للمنصة. المحفظة سجل برمجي (Ledger) يوضح لكل بائع حقه، وليست حساباً بنكياً حقيقياً.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">معلق</span><h3>Pending Balance</h3><p>قيمة طلبات مدفوعة لم يؤكد المشتري استلامها. تظهر للبائع ولا يستطيع سحبها.</p></div>
+    <div class="card"><span class="tag">متاح</span><h3>Available Balance</h3><p>الصافي بعد العمولة وضريبتها. هو وحده القابل للسحب.</p></div>
+    <div class="card"><span class="tag">إجمالي</span><h3>إجمالي الأرباح</h3><p>مجموع ما صار متاحاً عبر الزمن، يعرض أداء البائع.</p></div>
+  </div>
+  <h3>مثال حسابي (أرقام توضيحية)</h3>
+  <p class="sec-intro">نسبة العمولة 5% وضريبة القيمة المضافة 15% على العمولة فقط. هذه نسب افتراضية للشرح، والنسب الفعلية تحددها الإدارة.</p>
+  <div class="table-wrap"><table class="ledger">
+    <thead><tr><th>البند</th><th>المبلغ (ر.س)</th></tr></thead>
+    <tbody>
+      <tr><td>قيمة الطلب المدفوع (رصيد معلق)</td><td>1,000.00</td></tr>
+      <tr><td>عمولة المنصة 5%</td><td>- 50.00</td></tr>
+      <tr><td>ضريبة على العمولة 15%</td><td>- 7.50</td></tr>
+      <tr><td><b>الصافي المنقول إلى الرصيد المتاح</b></td><td><b>942.50</b></td></tr>
+    </tbody>
+  </table></div>
+  <div class="note info"><b>الملخص:</b> المشتري يدفع 1,000. المعلق يظهر 1,000 للبائع. بعد التأكيد يصير المتاح 942.50، وتحتفظ المنصة بـ 57.50.</div>
+  <h3>سجل العمليات</h3>
+  <p class="sec-intro">كل حركة تُسجَّل بقيدين: دفع، إضافة إلى المعلق، تحرير إلى المتاح، عمولة، طلب سحب، تحويل منفذ، استرداد. لا يُعدَّل أي قيد بعد تسجيله، والتصحيح يكون بقيد جديد معاكس.</p>
+</section>
+
+<section id="privacy">
+  <h2>7. منع التواصل المباشر وحماية العمولة</h2>
+  <p class="sec-intro">لو عرف المشتري البائع سينقل الصفقة خارج المنصة وتضيع العمولة. لذلك الهوية مخفية في كل نقطة تواصل.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>نقطة الاتصال</th><th>ما يراه الطرف الآخر</th></tr></thead>
+    <tbody>
+      <tr><td>نتائج البحث والعروض</td><td>رمز العرض والسعر والكمية والصلاحية. لا اسم ولا عنوان</td></tr>
+      <tr><td>صفحة الطلب</td><td>رمز الطلب (Order ID) بدل اسم الصيدلية</td></tr>
+      <tr><td>البوليصة المطبوعة</td><td>باركود، مدينة الوجهة، الوزن فقط</td></tr>
+      <tr><td>الإشعارات والرسائل</td><td>رمز الطلب فقط. لا قناة مراسلة مباشرة بين الصيدليات</td></tr>
+      <tr><td>رصد</td><td>لا يُرسل شيء قبل تأكيد الاستلام، فلا تنكشف تراخيص GLN قبل البيع</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="dispute">
+  <h2>8. دورة حياة النزاع</h2>
+  <p class="sec-intro">الشكوى تعني دواء تالفاً أو مخالفاً للطلب. الإدارة هي الحَكَم، والمال مجمّد حتى القرار.</p>
+  <div class="stages">
+    <div class="stage"><div class="n">1</div><div>
+      <h3>فتح الشكوى</h3>
+      <dl class="rows">
+        <div><dt>المشتري</dt><dd>يختار سبب الشكوى، ويرفع صوراً للدواء والعبوة والبوليصة، ويكتب وصفاً.</dd></div>
+        <div class="sys"><dt>النظام</dt><dd>ينشئ تذكرة، يجمّد المبلغ، ويمنع تأكيد الاستلام لهذا الطلب.</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">2</div><div>
+      <h3>رد البائع</h3>
+      <dl class="rows">
+        <div><dt>البائع</dt><dd>يرى الشكوى برمز الطلب ويرفع ما يثبت سلامة الشحنة (صور التجهيز مثلاً).</dd></div>
+      </dl></div></div>
+    <div class="stage"><div class="n">3</div><div>
+      <h3>قرار الإدارة</h3>
+      <dl class="rows">
+        <div><dt>الإدارة</dt><dd>تراجع الأدلة من الطرفين وتقرر أحد خيارين.</dd></div>
+        <div class="sys"><dt>لصالح المشتري</dt><dd>يُعاد المبلغ للمشتري ويُلغى الرصيد المعلق للبائع.</dd></div>
+        <div class="sys"><dt>لصالح البائع</dt><dd>يُحرَّر المبلغ ويُخصم منه العمولة كالمعتاد وينتقل للمتاح.</dd></div>
+      </dl></div></div>
+  </div>
+</section>
+
+<section id="gov">
+  <h2>9. الربط الحكومي</h2>
+  <div class="grid">
+    <div class="card"><span class="tag">رصد</span><h3>تتبع الدواء</h3>
+      <p>يُرسل من الخلفية فور تأكيد الاستلام فقط، ويتضمن GLN الطرفين والتشغيلة والكمية. إذا فشل الإرسال تُعاد المحاولة تلقائياً ويظهر الخطأ في سجل الربط عند الإدارة.</p></div>
+    <div class="card"><span class="tag">ZATCA</span><h3>الفوترة الإلكترونية</h3>
+      <p>تصدر الفواتير بعد اكتمال الطلب وتظهر للمشتري في لوحته. تراقب الإدارة حالة كل فاتورة (مقبولة، مرفوضة، قيد المعالجة).</p></div>
+  </div>
+</section>
+
+<section id="admin">
+  <h2>10. لوحة الإدارة العليا</h2>
+  <div class="grid">
+    <div class="card"><h3>العضوية والتحقق</h3><ul><li>طابور الطلبات الجديدة</li><li>مراجعة السجل التجاري والترخيص وGLN</li><li>قبول أو رفض أو إيقاف</li></ul></div>
+    <div class="card"><h3>الرقابة المالية</h3><ul><li>إجمالي المبيعات</li><li>العمولات المستحقة</li><li>اعتماد طلبات السحب وتنفيذ التحويل</li></ul></div>
+    <div class="card"><h3>النزاعات</h3><ul><li>نظام تذاكر</li><li>تجميد المال أو إعادته للمشتري أو تحريره للبائع</li></ul></div>
+    <div class="card"><h3>الربط والتقارير</h3><ul><li>سجل عمليات رصد وZATCA</li><li>تقارير تشغيلية ومالية</li></ul></div>
+  </div>
+</section>
+
+</div>
+
+</body></html>
